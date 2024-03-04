@@ -1,40 +1,62 @@
-
 import random  
 
-def g_u_ch():
-    u_c = input("Choose (r, p, or s): ").lower()
-    return u_c
+def get_user_choice():
+    #turns the inputs r, p, s into lower case if inputting as upper
+    user_choice = input("Choose (r, p, or s): ").lower()
+    return user_choice
 
-def g_c_ch():
-    return random.choice(["r", "p", "s"])
+def get_comp_choice():
+    #changed some code here to maintain consistency. 
+    #added comp_choice to mirror user_choice
+    comp_choice = random.choice(["r", "p", "s"])
+    return comp_choice
 
-def det_win(u_c, c_c):
-    if u_c == c_c:
+def who_wins(user_choice, comp_choice):
+    #defines parameters for what should go into func
+    if user_choice == comp_choice:
         return "U tied!"
-    elif (u_c == "r" and c_c == "s") or \
-         (u_c == "p" and c_c == "r") or \
-         (u_c == "s" and c_c == "p"):
+    #if user choice represented by u_c  == comp -> tie.
+    
+    elif (user_choice == "r" and comp_choice == "s") or \
+         (user_choice == "p" and comp_choice == "r") or \
+         (user_choice == "s" and comp_choice == "p"):
+             
         return "U win!"
     else:
         return "U lose!"
 
 def play_game():
-    print("Let's play r, p, s!")
+#change the sentence here for full sentence.
+    print("Let's play Rock, Paper, Scissors!")
 
     while True:
-        u_c = g_u_ch()  
-        c_c = g_c_ch()  
+        #set the arguments of who_wins to these two funcs
+        user_choice = get_user_choice()  
+        comp_choice = get_comp_choice()  
 
-        print(f"U chose {u_c}.")
-        print(f"C chose {c_c}.")
+        print(f"U chose {user_choice}.")
+        print(f"C chose {comp_choice}.")
 
-        result = det_win(u_c, c_c)  
+        result = who_wins(user_choice, comp_choice) 
         print(result)
 
-        play_again = input("Play again? (y/n): ").lower()  
-        if play_again != 'y':
-            print("Thanks. Bye!")
-            break
+#Added a bit of code to account for users inputting anything other than y or n
+#also added some text for clarity. 
+
+        play_again = "y"
+        while play_again == "y" or play_again == "reset":
+            play_again = input("Play again? (y/n): ").lower()
+            
+            if play_again == "y":
+                print("Another Round Begins!")
+                break
+            if play_again == 'n':
+                print("Thanks. Bye!")
+                break
+            else:
+                print("Not a valid answer.")
+                play_again = "reset"
+                
 
 if __name__ == "__main__":
     play_game()
